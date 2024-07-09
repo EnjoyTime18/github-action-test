@@ -84,4 +84,5 @@ jobs:
 
       - name: Execute REMOTE_HOST Commands
         run: |
+          ssh -i ~/private-key.pem ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} "sudo fuser -k 8080/tcp || true"
           ssh -i ~/private-key.pem ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} "sudo nohup java -jar /home/${{ secrets.REMOTE_USER }}/app.jar &"
