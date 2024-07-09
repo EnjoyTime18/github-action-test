@@ -62,5 +62,5 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            docker pull dockerlecture/github-action-docker
+            docker pull seongmin2018/github-action-docker
             docker run -d -p 8080:8080 --name github-action-backend dockerlecture/github-action-docker
