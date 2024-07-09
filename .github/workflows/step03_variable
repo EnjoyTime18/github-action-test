@@ -1,0 +1,28 @@
+name: step03_variable
+on: workflow_dispatch
+
+env:
+  name: Devops
+
+jobs:
+  build_1:
+    runs-on: ubuntu-latest
+    env: 
+      name: Infra
+    steps:
+    - name: Build_1 Step1
+      run: |
+        echo "Run Build_1 Step1 : $name"
+  build_2:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Build_2 Step1
+      run: |
+        echo "Run Build_2 Step1 : ${{ env.name }}"
+  build_3:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Build_3 Step1
+      run: |
+        echo "Run Build_3 Step1 Variables : ${{ vars.PROJECT_SERVER }}"
+        echo "Run Build_3 Step2 Secrets : ${{ secrets.PRIVATE_KEY }}"
