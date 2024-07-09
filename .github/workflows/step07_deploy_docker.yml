@@ -63,4 +63,4 @@ jobs:
           port: 22
           script: |
             docker pull seongmin2018/github-action-docker
-            docker run -d -p 8080:8080 --name github-action-backend dockerlecture/github-action-docker
+            docker run -d -p 8080:8080 --name github-action-backend seongmin2018/github-action-docker
