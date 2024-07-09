@@ -26,6 +26,9 @@ public class DeptController {
 		return deptService.getAllDepts();
 	}
 	
-	
-	
+	@GetMapping("/api/home/bulid/test")
+	public String buildtest() {
+		return "buildtest";
+	}
+		
 }
