@@ -48,3 +48,19 @@ jobs:
 
     - name: Docker Hub Push Image
       run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/github-action-docker
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Excute Remote SSH Commands Using SSH_PRIVATE_KEY
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            docker pull dockerlecture/github-action-docker
+            docker run -d -p 8080:8080 --name github-action-backend dockerlecture/github-action-docker
