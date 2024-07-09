@@ -1,0 +1,10 @@
+name: step02_condition
+on: workflow_dispatch
+jobs:
+  build:
+    if: github.repository == 'Lecture-SHIN/github-action-test'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Print Result
+      run: |
+        echo "Run Build on Lecture-SHIN/github-action-test"
