@@ -56,3 +56,32 @@ jobs:
     # # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     # - name: Update dependency graph
     #   uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: app
+
+      - name: Create SSH_PRIVATE_KEY
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/private-key.pem
+          chmod 600 ~/private-key.pem
+
+      - name: Create SSH Directory
+        run: |
+          mkdir -p ~/.ssh
+          
+      - name: Add Host
+        run: |
+          ssh-keyscan ${{ secrets.REMOTE_HOST }} >> ~/.ssh/known_hosts
+      
+      - name: Transfer Artifact Jar via SCP
+        run: |
+          scp -i ~/private-key.pem app.jar ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }}:/home/${{ secrets.REMOTE_USER }}
+
+      - name: Execute REMOTE_HOST Commands
+        run: |
+          ssh -i ~/private-key.pem ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} "sudo nohup java -jar /home/${{ secrets.REMOTE_USER }}/app.jar &"
