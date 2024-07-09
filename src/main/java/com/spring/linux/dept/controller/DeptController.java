@@ -18,7 +18,7 @@ public class DeptController {
 	
 	@GetMapping("/api/home")
 	public String home() {
-		return "home";
+		return "home:v2";
 	}
 	
 	@GetMapping("/api/depts")
