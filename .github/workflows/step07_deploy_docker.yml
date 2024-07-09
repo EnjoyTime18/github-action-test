@@ -27,6 +27,13 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+        
+    - uses: actions/checkout@v2
+    - run: |
+        mkdir -p ./src/main/resources
+        touch ./src/main/resources/application.properties
+    - run: echo "${{ secrets.APPLICATION_PROPERTIES }}" > ./src/main/resources/application.properties
+
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
